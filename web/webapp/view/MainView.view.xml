@@ -1,0 +1,45 @@
+<mvc:View
+    controllerName="web.controller.MainView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form"
+    id="MainView">
+    <Page id="mainPage" title="Notas Fiscais">
+        <content>
+            <VBox id="notaFiscalVBox">
+                <Button id="addNotaFiscalButton" text="Adicionar Nota Fiscal" press="onAddNotaFiscal"/>
+                <Table id="notaFiscalTable" items="{notaFiscal>/NotaFiscais}">
+                    <headerToolbar>
+                        <Toolbar id="notaFiscalToolbar">
+                            <Title id="notaFiscalTitle" text="Lista de Notas Fiscais" />
+                        </Toolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column id="notaNumeroColumn">
+                            <Text id="notaNumeroText" text="Número da Nota" />
+                        </Column>
+                        <Column id="notaValorColumn">
+                            <Text id="notaValorText" text="Valor da Nota" />
+                        </Column>
+                        <Column id="clienteColumn">
+                            <Text id="clienteText" text="Cliente" />
+                        </Column>
+                        <Column id="fornecedorColumn">
+                            <Text id="fornecedorText" text="Fornecedor" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem id="notaFiscalListItem">
+                            <cells>
+                                <Text id="notaNumeroCellText" text="{notaFiscal>valorNota}" />
+                                <Text id="notaValorCellText" text="{notaFiscal>notaValor}" />
+                                <Text id="clienteNomeCellText" text="{notaFiscal>cliente/nome}" />
+                                <Text id="fornecedorNomeCellText" text="{notaFiscal>fornecedor/nome}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

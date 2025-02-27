@@ -1,0 +1,17 @@
+{
+    "name": "brfiscalweb.BrGaapFiscalWeb",
+    "scripts": {
+        "build": "mbt build --mtar brfiscalweb.BrGaapFiscalWeb.mtar",
+        "build:workspaces": "npm run build --workspaces --if-present",
+        "deploy": "cf deploy mta_archives/brfiscalweb.BrGaapFiscalWeb.mtar --retries 0",
+        "lint": "npm run lint --workspaces --if-present",
+        "ui5lint": "npm run ui5lint --workspaces --if-present",
+        "start:web": "npm start --workspace web"
+    },
+    "dependencies": {
+        "mbt": "^1"
+    },
+    "workspaces": [
+        "web"
+    ]
+}

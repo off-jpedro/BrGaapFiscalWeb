@@ -1,0 +1,16 @@
+{
+  "generator-ui5-project": {
+    "namespaceUI5": "brfiscalweb",
+    "projectName": "BrGaapFiscalWeb",
+    "uimoduleName": "web",
+    "enableFPM": false,
+    "platform": "Application Router",
+    "ui5Libs": "Content delivery network (OpenUI5)",
+    "newDir": false,
+    "initRepo": false,
+    "projectId": "brfiscalweb.BrGaapFiscalWeb",
+    "uimodules": [
+      "web"
+    ]
+  }
+}

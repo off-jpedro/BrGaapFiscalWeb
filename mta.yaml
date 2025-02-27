@@ -1,0 +1,62 @@
+_schema-version: "3.2"
+ID: brfiscalweb.BrGaapFiscalWeb
+version: 0.0.1
+
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm install
+        - npm run build:workspaces
+
+modules:
+  - name: brfiscalweb.BrGaapFiscalWeb-approuter
+    type: nodejs
+    path: approuter
+    requires:
+      - name: brfiscalweb.BrGaapFiscalWeb-destination-service
+      - name: html5-apps-repo-rt
+    provides:
+      - name: approuter
+        properties:
+          callback-url: ${default-url}/login/callback
+    parameters:
+      disk-quota: 1024M
+      memory: 1024M
+
+  - name: ui5app
+    type: html5
+    path: webapp
+    build-parameters:
+      builder: grunt
+      build-result: dist
+    requires:
+      - name: html5-apps-repo
+
+resources:
+  - name: brfiscalweb.BrGaapFiscalWeb-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-name: brfiscalweb.BrGaapFiscalWeb-destination-service
+      service-plan: lite
+
+  - name: html5-apps-repo
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+
+  - name: html5-apps-repo-rt
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo-rt
+      service-plan: app-runtime
+
+  - name: srv-api
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+      config:
+        URL: "http://localhost:5136/api"

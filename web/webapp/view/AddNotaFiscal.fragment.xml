@@ -1,0 +1,25 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form">
+    <Dialog id="addNotaFiscalDialog" title="Adicionar Nota Fiscal" stretch="false" resizable="true">
+        <content>
+            <form:SimpleForm id="notaFiscalForm">
+                <Label id="notaNumeroLabel" text="Número da Nota" />
+                <Input id="notaNumeroInput" value="{notaFiscal>/numeroNota}" />
+                <Label id="notaValorLabel" text="Valor da Nota" />
+                <Input id="notaValorInput" value="{notaFiscal>/valorNota}" type="Number" />
+                <Label id="clienteNomeLabel" text="Cliente Nome" />
+                <Input id="clienteNomeInput" value="{notaFiscal>/cliente/nome}" />
+                <Label id="fornecedorNomeLabel" text="Fornecedor Nome" />
+                <Input id="fornecedorNomeInput" value="{notaFiscal>/fornecedor/nome}" />
+            </form:SimpleForm>
+        </content>
+        <beginButton>
+            <Button id="saveNotaFiscalButton" text="Salvar" type="Accept" press=".onSaveNotaFiscal" />
+        </beginButton>
+        <endButton>
+            <Button id="cancelNotaFiscalButton" text="Cancelar" press=".onCancel" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
