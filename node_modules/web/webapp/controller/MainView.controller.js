@@ -3,8 +3,10 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
     "sap/ui/core/Fragment",
-    "../model/models"
-], function (Controller, JSONModel, MessageToast, Fragment, models) {
+    "../model/models",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator"
+], function (Controller, JSONModel, MessageToast, Fragment, models, Filter, FilterOperator) {
     "use strict";
 
     return Controller.extend("web.controller.MainView", {
@@ -140,6 +142,50 @@ sap.ui.define([
                 this._oDialog.close();
                 this._oDialog.destroy();
                 this._oDialog = null;
+            }
+        },
+
+        onSearchNotaFiscal: function (oEvent) {
+            var sQuery = oEvent.getParameter("newValue");
+            var aFilters = [];
+            if (sQuery && sQuery.length > 0) {
+                var oFilter1 = new Filter("numeroNota", FilterOperator.EQ, sQuery); // Use EQ for exact match on numbers
+                var oFilter3 = new Filter("cliente/nome", FilterOperator.Contains, sQuery);
+                var oFilter4 = new Filter("fornecedor/nome", FilterOperator.Contains, sQuery);
+                aFilters = new Filter({
+                    filters: [oFilter1, oFilter3, oFilter4],
+                    and: false
+                });
+            }
+            var oTable = this.byId("notaFiscalTable");
+            var oBinding = oTable.getBinding("items");
+            oBinding.filter(aFilters, "Application");
+        },
+
+        onShowClienteDetails: function (oEvent) {
+            var oSource = oEvent.getSource();
+            var oContext = oSource.getBindingContext("notaFiscal");
+
+            if (!this._oNotaFiscalFormDialog) {
+                Fragment.load({
+                    id: this.getView().getId(),
+                    name: "web.view.NotaFiscalForm",
+                    controller: this
+                }).then(function (oDialog) {
+                    this._oNotaFiscalFormDialog = oDialog;
+                    this.getView().addDependent(this._oNotaFiscalFormDialog);
+                    this._oNotaFiscalFormDialog.setBindingContext(oContext, "notaFiscal");
+                    this._oNotaFiscalFormDialog.open();
+                }.bind(this));
+            } else {
+                this._oNotaFiscalFormDialog.setBindingContext(oContext, "notaFiscal");
+                this._oNotaFiscalFormDialog.open();
+            }
+        },
+
+        onCloseNotaFiscalForm: function () {
+            if (this._oNotaFiscalFormDialog) {
+                this._oNotaFiscalFormDialog.close();
             }
         }
     });

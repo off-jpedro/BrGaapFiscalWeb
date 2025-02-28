@@ -1,0 +1,19 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog id="notaFiscalFormDialog" title="Detalhes da Nota Fiscal">
+        <content>
+            <VBox id="notaFiscalDialogVBox">
+                <Text id="clienteNomeText" text="Nome do Cliente:" />
+                <Text id="clienteNomeValue" text="{notaFiscal>cliente/nome}" />
+                <Text id="fornecedorNomeText" text="Nome do Fornecedor:" />
+                <Text id="fornecedorNomeValue" text="{notaFiscal>fornecedor/nome}" />
+                <Text id="numeroNotaText" text="Número da Nota:" />
+                <Text id="numeroNotaValue" text="{notaFiscal>numeroNota}" />
+                <Text id="valorNotaText" text="Valor da Nota:" />
+                <Text id="valorNotaValue" text="{notaFiscal>valorNota}" />
+            </VBox>
+        </content>
+        <beginButton>
+            <Button id="cancelButton" text="Cancelar" press="onCloseNotaFiscalForm" />
+        </beginButton>
+    </Dialog>
+</core:FragmentDefinition>

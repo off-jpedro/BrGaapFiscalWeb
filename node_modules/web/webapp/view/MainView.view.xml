@@ -12,6 +12,8 @@
                     <headerToolbar>
                         <Toolbar id="notaFiscalToolbar">
                             <Title id="notaFiscalTitle" text="Lista de Notas Fiscais" />
+                            <ToolbarSpacer id="notaFiscalToolbarSpacer" />
+                            <SearchField id="notaFiscalSearchField" liveChange="onSearchNotaFiscal" placeholder="Pesquisar..." />
                         </Toolbar>
                     </headerToolbar>
                     <columns>
@@ -27,6 +29,9 @@
                         <Column id="fornecedorColumn">
                             <Text id="fornecedorText" text="Fornecedor" />
                         </Column>
+                        <Column id="actionColumn">
+                            <Text id="TextAcoes" text="Ações" />
+                        </Column>
                     </columns>
                     <items>
                         <ColumnListItem id="notaFiscalListItem">
@@ -35,6 +40,7 @@
                                 <Text id="notaValorCellText" text="{notaFiscal>valorNota}" />
                                 <Text id="clienteNomeCellText" text="{notaFiscal>cliente/nome}" />
                                 <Text id="fornecedorNomeCellText" text="{notaFiscal>fornecedor/nome}" />
+                                <Button id="ButtonAcoes" icon="sap-icon://action" press="onShowClienteDetails" />
                             </cells>
                         </ColumnListItem>
                     </items>
