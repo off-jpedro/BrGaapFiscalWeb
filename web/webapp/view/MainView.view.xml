@@ -31,8 +31,8 @@
                     <items>
                         <ColumnListItem id="notaFiscalListItem">
                             <cells>
-                                <Text id="notaNumeroCellText" text="{notaFiscal>valorNota}" />
-                                <Text id="notaValorCellText" text="{notaFiscal>notaValor}" />
+                                <Text id="notaNumeroCellText" text="{notaFiscal>numeroNota}" />
+                                <Text id="notaValorCellText" text="{notaFiscal>valorNota}" />
                                 <Text id="clienteNomeCellText" text="{notaFiscal>cliente/nome}" />
                                 <Text id="fornecedorNomeCellText" text="{notaFiscal>fornecedor/nome}" />
                             </cells>
