@@ -5,8 +5,8 @@
     <Dialog id="addNotaFiscalDialog" title="Adicionar Nota Fiscal" stretch="false" resizable="true">
         <content>
             <form:SimpleForm id="notaFiscalForm">
-                <Label id="notaNumeroLabel" text="Número da Nota" />
-                <Input id="notaNumeroInput" value="{notaFiscal>/numeroNota}" type="Number" liveChange="onFieldChange"/>
+                <!-- <Label id="notaNumeroLabel" text="Número da Nota" /> -->
+                <!-- <Input id="notaNumeroInput" value="{notaFiscal>/numeroNota}" type="Number" liveChange="onFieldChange"/> -->
                 <Label id="notaValorLabel" text="Valor da Nota" />
                 <Input id="notaValorInput" value="{notaFiscal>/valorNota}" type="Number" liveChange="onFieldChange"/>
                 <Label id="clienteNomeLabel" text="Cliente Nome" />

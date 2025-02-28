@@ -12,10 +12,9 @@ sap.ui.define([
         onInit: function () {
             var oViewModel = new JSONModel({
                 NotaFiscais: [],
-                numeroNota: "",
                 valorNota: "",
-                Cliente: { id: 0, nome: "" },
-                Fornecedor: { id: 0, nome: "" }
+                Cliente: { nome: "" },
+                Fornecedor: {nome: "" }
             });
             this.getView().setModel(oViewModel, "notaFiscal");
             this._loadNotaFiscais();
@@ -83,14 +82,14 @@ sap.ui.define([
             var fornecedorNome = oModel.getProperty("/Fornecedor/nome");
 
             // Verificar se todos os campos obrigatórios estão preenchidos
-            if (!numeroNota || !valorNota || !clienteNome || !fornecedorNome) {
+            if (!valorNota || !clienteNome || !fornecedorNome) {
                 MessageToast.show("Todos os campos são obrigatórios.");
                 return;
             }
 
             var newNotaFiscal = {
                 id: 0,  // Novo registro, id é 0
-                numeroNota: parseInt(numeroNota, 10),  // Convertendo para Int32
+                numeroNota: 0,  // Convertendo para Int32
                 valorNota: parseFloat(valorNota),
                 cliente: {
                     id: 0,  // Novo cliente, id é 0
@@ -107,7 +106,7 @@ sap.ui.define([
 
             // Enviar a nota fiscal para a API
             $.ajax({
-                url: "http://localhost:7117/api/NotaFiscal",
+                url: "http://localhost:5136/api/NotaFiscal",
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(newNotaFiscal),
