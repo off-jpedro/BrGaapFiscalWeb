@@ -2,18 +2,20 @@
     <Dialog id="notaFiscalFormDialog" title="Detalhes da Nota Fiscal">
         <content>
             <VBox id="notaFiscalDialogVBox">
-                <Text id="clienteNomeText" text="Nome do Cliente:" />
-                <Text id="clienteNomeValue" text="{notaFiscal>cliente/nome}" />
-                <Text id="fornecedorNomeText" text="Nome do Fornecedor:" />
-                <Text id="fornecedorNomeValue" text="{notaFiscal>fornecedor/nome}" />
-                <Text id="numeroNotaText" text="Número da Nota:" />
-                <Text id="numeroNotaValue" text="{notaFiscal>numeroNota}" />
-                <Text id="valorNotaText" text="Valor da Nota:" />
-                <Text id="valorNotaValue" text="{notaFiscal>valorNota}" />
+                <Label id="clienteNomeLabelDialog" text="Nome do Cliente:" />
+                <Input id="clienteNomeInputDialog" value="{notaFiscal>cliente/nome}" />
+                <Label id="fornecedorNomeLabelDialog" text="Nome do Fornecedor:" />
+                <Input id="fornecedorNomeInputDialog" value="{notaFiscal>fornecedor/nome}" />
+                <Label id="numeroNotaLabel" text="Número da Nota:" />
+                <Input id="numeroNotaInput" value="{notaFiscal>numeroNota}" />
+                <Label id="valorNotaLabel" text="Valor da Nota:" />
+                <Input id="valorNotaInput" value="{notaFiscal>valorNota}" />
             </VBox>
         </content>
-        <beginButton>
+        <buttons>
+            <Button id="editButton" text="Editar" press="onEditNotaFiscal" />
+            <Button id="deleteButton" text="Deletar" press="onDeleteNotaFiscal" />
             <Button id="cancelButton" text="Cancelar" press="onCloseNotaFiscalForm" />
-        </beginButton>
+        </buttons>
     </Dialog>
 </core:FragmentDefinition>

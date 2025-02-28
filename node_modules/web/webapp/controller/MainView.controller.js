@@ -43,13 +43,11 @@ sap.ui.define([
         onAddNotaFiscal: function () {
             var oView = this.getView();
 
-            // Verificar se a view foi obtida corretamente
             if (!oView) {
                 MessageToast.show("Erro ao obter a view.");
                 return;
             }
 
-            // Se o diálogo ainda não foi criado, carregar o fragmento
             if (!this._oDialog) {
                 Fragment.load({
                     id: oView.getId(),
@@ -70,12 +68,10 @@ sap.ui.define([
         },
 
         onSaveNotaFiscal: function () {
-            var oModel = this.getView().getModel("notaFiscal");  // Acessando o modelo corretamente
-
-            // Verificar se o modelo foi inicializado corretamente
+            var oModel = this.getView().getModel("notaFiscal");  
             if (!oModel) {
                 MessageToast.show("Modelo não inicializado.");
-                return; // Se o modelo não existe, interrompe a execução
+                return; 
             }
 
             var numeroNota = oModel.getProperty("/numeroNota");
@@ -83,30 +79,27 @@ sap.ui.define([
             var clienteNome = oModel.getProperty("/Cliente/nome");
             var fornecedorNome = oModel.getProperty("/Fornecedor/nome");
 
-            // Verificar se todos os campos obrigatórios estão preenchidos
             if (!valorNota || !clienteNome || !fornecedorNome) {
                 MessageToast.show("Todos os campos são obrigatórios.");
                 return;
             }
 
             var newNotaFiscal = {
-                id: 0,  // Novo registro, id é 0
-                numeroNota: 0,  // Convertendo para Int32
+                id: 0,  
+                numeroNota: 0,  
                 valorNota: parseFloat(valorNota),
                 cliente: {
-                    id: 0,  // Novo cliente, id é 0
+                    id: 0,  
                     nome: clienteNome
                 },
                 fornecedor: {
-                    id: 0,  // Novo fornecedor, id é 0
+                    id: 0,  
                     nome: fornecedorNome
                 }
             };
 
-            // Log dos dados que estão sendo enviados
             console.log("Enviando dados:", newNotaFiscal);
 
-            // Enviar a nota fiscal para a API
             $.ajax({
                 url: "http://localhost:5136/api/NotaFiscal",
                 method: "POST",
@@ -115,22 +108,19 @@ sap.ui.define([
                 success: function () {
                     MessageToast.show("Nota Fiscal salva com sucesso.");
 
-                    // Resetar os campos do modelo
                     oModel.setProperty("/numeroNota", "");
                     oModel.setProperty("/valorNota", "");
                     oModel.setProperty("/Cliente/nome", "");
                     oModel.setProperty("/Fornecedor/nome", "");
 
-                    // Fechar o diálogo
                     this._oDialog.close();
                     this._oDialog.destroy();
                     this._oDialog = null;
 
-                    // Atualizar lista de notas fiscais
+
                     this._loadNotaFiscais();
                 }.bind(this),
                 error: function (jqXHR, textStatus, errorThrown) {
-                    // Log dos detalhes do erro
                     console.log("Erro ao salvar a Nota Fiscal:", textStatus, errorThrown, jqXHR.responseText);
                     MessageToast.show("Erro ao salvar a Nota Fiscal.");
                 }
@@ -187,6 +177,59 @@ sap.ui.define([
             if (this._oNotaFiscalFormDialog) {
                 this._oNotaFiscalFormDialog.close();
             }
+        },
+
+        onEditNotaFiscal: function () {
+            var oModel = this.getView().getModel("notaFiscal");
+            var oContext = this._oNotaFiscalFormDialog.getBindingContext("notaFiscal");
+            var oData = oContext.getObject();
+
+            var updatedNotaFiscal = {
+                id: oData.id,
+                numeroNota: parseInt(this.byId("numeroNotaInput").getValue(), 10),
+                valorNota: parseFloat(this.byId("valorNotaInput").getValue()),
+                cliente: {
+                    id: oData.cliente.id,
+                    nome: this.byId("clienteNomeInput").getValue()
+                },
+                fornecedor: {
+                    id: oData.fornecedor.id,
+                    nome: this.byId("fornecedorNomeInput").getValue()
+                }
+            };
+
+            $.ajax({
+                url: "http://localhost:5136/api/NotaFiscal/" + updatedNotaFiscal.id,
+                method: "PUT",
+                contentType: "application/json",
+                data: JSON.stringify(updatedNotaFiscal),
+                success: function () {
+                    MessageToast.show("Nota Fiscal atualizada com sucesso.");
+                    this._oNotaFiscalFormDialog.close();
+                    this._loadNotaFiscais();
+                }.bind(this),
+                error: function () {
+                    MessageToast.show("Erro ao atualizar a Nota Fiscal.");
+                }
+            });
+        },
+
+        onDeleteNotaFiscal: function () {
+            var oContext = this._oNotaFiscalFormDialog.getBindingContext("notaFiscal");
+            var oData = oContext.getObject();
+
+            $.ajax({
+                url: "http://localhost:5136/api/NotaFiscal/" + oData.id,
+                method: "DELETE",
+                success: function () {
+                    MessageToast.show("Nota Fiscal deletada com sucesso.");
+                    this._oNotaFiscalFormDialog.close();
+                    this._loadNotaFiscais();
+                }.bind(this),
+                error: function () {
+                    MessageToast.show("Erro ao deletar a Nota Fiscal.");
+                }
+            });
         }
     });
 });
